@@ -11,7 +11,6 @@ load_dotenv()
 KEY = os.getenv('THE_NOUN_PROJECT_KEY')
 SECRET = os.getenv('THE_NOUN_PROJECT_SECRET')
 auth = OAuth1(KEY, SECRET)
-items = ['fish', 'dog', 'cat', 'bird']
 
 
 def get_licence_types(icons):
@@ -29,8 +28,6 @@ def get_icon_groups(icons):
 def get_icons(item):
     icons = []
     endpoint = 'http://api.thenounproject.com/icons/{}?limit=50'.format(item)
-
-    # not in a try block coz I need to see the traceback
     response = requests.get(endpoint, auth=auth)
     icons = response.json()['icons']
     return icons
@@ -39,6 +36,5 @@ def get_icons(item):
 def get_all_icons(items):
     all_icons = []
     for item in items:
-        all_icons.append(get_icons(item))
+        all_icons += get_icons(item)
     return all_icons
-
